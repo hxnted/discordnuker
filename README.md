@@ -2,7 +2,7 @@
 simple discord nuker
 
 # IF YOU NUKE A SERVER WITH OTHER 100 MEMBERS WITH THIS. PLEASE DM ME THE CLIP ON DISCORD
-# My Discord: htnd
+# My Discord: dgli
 
 to use this nuker you have to do some very simple things.
 First off, create an application at https://discord.com/developers/applications
