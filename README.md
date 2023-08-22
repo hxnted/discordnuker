@@ -20,7 +20,7 @@ simple discord nuker
 - You should now see this long text, make sure to copy it and to not loose it.
 - Note: Do not share your bot token unless you want people to have access to your bot.
 
-- Now, download the nuker.py file and open it in Visual Studio Code.
+- Now, download the bot.py file and open it in Visual Studio Code.
 - You can change the code to whatever you like, but try not to mess with it too much.
 - Now scroll to the bottom of the code, and you should see this:
 ![image](https://github.com/hxnted/discordnuker/assets/135558337/e0e6dc60-bade-40f0-aff0-c8a768361a75)
